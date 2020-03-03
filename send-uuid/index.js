@@ -47,7 +47,6 @@ app.post("/uuid/new", function(req, res) {
 });
 app.post("/uuid/send", function(req, res) {
   var send_uuid = req.body.send_uuid;
-  console.log(send_uuid);
   var DataBaseHandler = require("./DataBaseHandler");
   var dataBaseHandler = new DataBaseHandler();
   var connection = dataBaseHandler.createConnection();
@@ -62,7 +61,9 @@ app.post("/uuid/send", function(req, res) {
     if (err) {
       res.send(err);
     } else {
-      res.send("UUID SENT");
+      res.render('sent', {
+        send_uuid:send_uuid
+      })
       client.get('visits', (err, visits) => {
         client.set('visits', parseInt(visits) + 1)
     })

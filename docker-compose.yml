@@ -2,9 +2,12 @@ version: '3'
 services:
   send-uuid:
     build: ./send-uuid
+    volumes:
+      - /home/saify2j/Desktop/angel-projects/send-uuid/send-uuid/:/usr/src/app
     ports:
      - 6001:8080
      - 6002:8080
+    restart: on-failure
     depends_on:
      - db
     environment:
