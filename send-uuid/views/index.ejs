@@ -8,36 +8,46 @@
   <title>Redis Send UUID</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="">
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link href="style.css" rel="stylesheet">
+  <link href="/style.css" rel="stylesheet">
 </head>
+
 <body>
-<style>
+  <style>
+    body {
+      font-family: Ubuntu;
+      background: #c2e59c;
+      /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #64b3f4, #c2e59c);
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #64b3f4, #c2e59c);
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-body {
-  font-family: Ubuntu;
-  background: skyblue;
-  padding: 20px;
-  padding-top: 60px;
-}
+      padding: 20px;
+      padding-top: 60px;
+    }
 
-@media (max-width: 979px) {
-  body {
-    padding-top: 50px;
-  }
-}
-</style>
+    @media (max-width: 979px) {
+      body {
+        padding-top: 50px;
+      }
+    }
+    @media (max-width: 600px) {
+      #generate_new{
+        margin-top:5px;
+      }
+    }
+  </style>
   <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
     <div class="container">
       <a href="/" class="navbar-brand">Redis Send UUID</a>
     </div>
   </div>
 
-  <div id="con" class="container" style="margin-top: 20px;">
-    <form method="POST" action="/uuid/new">
-      <div class="row" >
+  <div class="container" style="margin-top: 20px;">
+    <form method="GET" action="/uuid/new">
+      <div class="row">
         <div class="col-md-6">
           <% if (uuid=='null') { %>
           <input type="text" class="form-control" placeholder="Generate UUID">
@@ -45,8 +55,8 @@ body {
           <input type="text" class="form-control" value=<%= uuid %>>
           <% } %>
         </div>
-        <div class="col-md-4" style="margin:0;padding: 0;width: 100%;">
-          <input type="submit" class="btn btn-primary" value="Generate New">
+        <div class="col-md-6" >
+          <input id="generate_new" type="submit" class="btn btn-primary" value="Generate New">
         </div>
       </div>
     </form>
@@ -55,10 +65,10 @@ body {
       <div class="row justify-content-start" style="margin-top:1%;">
         <div class="col-md-3" style="float: left;">
           <% if (uuid=='null') { %>
-            <input name="send_uuid" type="hidden">
-            <% } else { %>
-            <input name="send_uuid" type="hidden" value=<%= uuid %>>
-            <% } %>
+          <input name="send_uuid" type="hidden">
+          <% } else { %>
+          <input name="send_uuid" type="hidden" value=<%= uuid %>>
+          <% } %>
           <input type="submit" class="btn btn-success" value="Send" style="width:100%">
         </div>
       </div>

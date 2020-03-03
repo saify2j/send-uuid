@@ -7,37 +7,33 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Redis Send UUID</title>
   <meta name="description" content="">
-  <!-- <meta http-equiv="refresh" content="3;url=/" /> -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="">
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link href="style.css" rel="stylesheet">
 </head>
+
 <body>
-<style>
+  <style>
+    body {
+      font-family: Ubuntu;
+      background: skyblue;
+      padding: 20px;
+      padding-top: 60px;
+    }
 
-body {
-  font-family: Ubuntu;
-  background: skyblue;
-  padding: 20px;
-  padding-top: 60px;
-}
-.card{
-  margin:auto;
-  width:50%;
-}
-@media (max-width: 979px) {
-  body {
-    padding-top: 50px;
-  }
-  .card{
-    margin:auto;
-    width:100% !important;
-  }
-}
+    @media (max-width: 979px) {
+      body {
+        padding-top: 50px;
+      }
+    }
 
-</style>
+    .card {
+      margin: auto;
+      width: 50%;
+    }
+  </style>
   <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
     <div class="container">
       <a href="/" class="navbar-brand">Redis Send UUID</a>
@@ -46,12 +42,13 @@ body {
   <div class="container">
     <div class="card">
       <div class="card-body">
-        <h3>UUID sent successfully!</h3>
-        <h5 style="color:teal;"> <%= send_uuid %></h5>
-        <a href="/" class="btn btn-success">Home</a>
+        <h3>Number of UUID POSTED</h3>
+        <h4 style="color:teal;"> <%= post_number %></h4>
+
       </div>
     </div>
   </div>
+
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"

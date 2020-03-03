@@ -39,11 +39,24 @@ app.get("/", function(req, res) {
     uuid: uuid
   });
 });
-app.post("/uuid/new", function(req, res) {
+app.get("/uuid/new", function(req, res) {
   var uuid_gen = uuid.v4();
   res.render("index", {
     uuid: uuid_gen
   });
+});
+app.get('/visits',function(req, res){
+  client.get('visits',function(err,visits){
+    if(err){
+      console.log(err);
+    }
+    else {
+      var post_number= visits;
+      res.render('visit',{
+        post_number: post_number
+      })
+    }
+  })
 });
 app.post("/uuid/send", function(req, res) {
   var send_uuid = req.body.send_uuid;
@@ -70,6 +83,5 @@ app.post("/uuid/send", function(req, res) {
     }
   });
 });
-
 app.listen(8080);
 console.log("send-uuid running on port 8080");
