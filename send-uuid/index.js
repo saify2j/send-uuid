@@ -5,7 +5,9 @@ var bodyParser = require("body-parser");
 var uuid = require("uuid");
 var app = express();
 const redis = require('redis')
-
+var DataBaseHandler = require("./DataBaseHandler");
+  var dataBaseHandler = new DataBaseHandler();
+  var connection = dataBaseHandler.createConnection();
 const client = redis.createClient({
   host: 'redis-server',
   port: 6379
@@ -58,6 +60,31 @@ app.get('/visits',function(req, res){
     }
   })
 });
+app.get("/send", function(req, res){
+  var uuid_sent = uuid.v4();
+  client.get('visits', (err, visits) => {
+    client.set('visits', parseInt(visits) + 1)
+  })
+  let sql =
+    `INSERT INTO uuid_table(uuid)
+           VALUES('` +
+    uuid_sent +
+    `')`;
+
+    connection.query(sql, (err, results, fields) => {
+    if (err) {
+      res.send(err);
+    } else {
+      console.log('done savin')
+    }
+  });
+  res.render('sent',{
+    send_uuid:uuid_sent
+  })
+
+})
+
+
 app.post("/uuid/send", function(req, res) {
   var send_uuid = req.body.send_uuid;
   var DataBaseHandler = require("./DataBaseHandler");

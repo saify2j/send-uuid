@@ -1,5 +1,8 @@
-version: '3'
+version: '3.3'
 services:
+  db:
+    build: ./db_mysql
+    command: --default-authentication-plugin=mysql_native_password
   send-uuid:
     build: ./send-uuid
     volumes:
@@ -7,13 +10,13 @@ services:
     ports:
      - 6001:8080
      - 6002:8080
-    restart: on-failure
     depends_on:
      - db
     environment:
+     - WAIT_HOSTS= db:3306
+     - WAIT_HOSTS_TIMEOUT=100
+     - WAIT_BEFORE_HOSTS= 10
      - DATABASE_HOST=db
-  db:
-    build: ./db_mysql
-    command: --default-authentication-plugin=mysql_native_password
+
   redis-server:
     image: 'redis'
