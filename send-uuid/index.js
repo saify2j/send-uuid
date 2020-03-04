@@ -3,16 +3,18 @@ var path = require("path");
 var logger = require("morgan");
 var bodyParser = require("body-parser");
 var uuid = require("uuid");
+const redis = require("redis");
+
 var app = express();
-const redis = require('redis')
+
 var DataBaseHandler = require("./DataBaseHandler");
-  var dataBaseHandler = new DataBaseHandler();
-  var connection = dataBaseHandler.createConnection();
+var dataBaseHandler = new DataBaseHandler();
+var connection = dataBaseHandler.createConnection();
 const client = redis.createClient({
-  host: 'redis-server',
+  host: "redis-server",
   port: 6379
 });
-client.set('visits', 0);
+client.set("visits", 0);
 // let config = require('./dbconfig')
 // let connection = mysql.createConnection(config);
 
@@ -47,43 +49,40 @@ app.get("/uuid/new", function(req, res) {
     uuid: uuid_gen
   });
 });
-app.get('/visits',function(req, res){
-  client.get('visits',function(err,visits){
-    if(err){
+app.get("/visits", function(req, res) {
+  client.get("visits", function(err, visits) {
+    if (err) {
       console.log(err);
-    }
-    else {
-      var post_number= visits;
-      res.render('visit',{
+    } else {
+      var post_number = visits;
+      res.render("visit", {
         post_number: post_number
-      })
+      });
     }
-  })
+  });
 });
-app.get("/send", function(req, res){
+app.get("/send", function(req, res) {
   var uuid_sent = uuid.v4();
-  client.get('visits', (err, visits) => {
-    client.set('visits', parseInt(visits) + 1)
-  })
+  client.get("visits", (err, visits) => {
+    client.set("visits", parseInt(visits) + 1);
+  });
   let sql =
     `INSERT INTO uuid_table(uuid)
            VALUES('` +
     uuid_sent +
     `')`;
 
-    connection.query(sql, (err, results, fields) => {
+  connection.query(sql, (err, results, fields) => {
     if (err) {
       res.send(err);
     } else {
-      console.log('done savin')
+      console.log("done savin");
     }
   });
-  res.render('sent',{
-    send_uuid:uuid_sent
-  })
-
-})
-
+  res.render("sent", {
+    send_uuid: uuid_sent
+  });
+});
 
 app.post("/uuid/send", function(req, res) {
   var send_uuid = req.body.send_uuid;
@@ -101,12 +100,12 @@ app.post("/uuid/send", function(req, res) {
     if (err) {
       res.send(err);
     } else {
-      res.render('sent', {
-        send_uuid:send_uuid
-      })
-      client.get('visits', (err, visits) => {
-        client.set('visits', parseInt(visits) + 1)
-    })
+      res.render("sent", {
+        send_uuid: send_uuid
+      });
+      client.get("visits", (err, visits) => {
+        client.set("visits", parseInt(visits) + 1);
+      });
     }
   });
 });

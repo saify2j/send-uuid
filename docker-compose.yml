@@ -8,8 +8,7 @@ services:
     volumes:
       - /home/saify2j/Desktop/angel-projects/send-uuid/send-uuid/:/usr/src/app
     ports:
-     - 6001:8080
-     - 6002:8080
+     - 6001-6005:8080
     depends_on:
      - db
     environment:
